@@ -70,7 +70,7 @@ define Package/nginx
   SUBMENU:=Web Servers/Proxies
   TITLE:=Nginx web server
   URL:=http://nginx.org/
-  DEPENDS:=+NGINX_PCRE:libpcre +(NGINX_SSL||NGINX_HTTP_CACHE||NGINX_HTTP_AUTH_BASIC):libopenssl +NGINX_HTTP_GZIP:zlib +NGINX_LUA:liblua +libpthread
+  DEPENDS:=+NGINX_PCRE:libpcre +(NGINX_SSL||NGINX_HTTP_CACHE||NGINX_HTTP_AUTH_BASIC):libopenssl +NGINX_HTTP_GZIP:zlib +NGINX_LUA:liblua +libpthread +NGINX_DAV:libexpat
   MENU:=1
 endef
 
@@ -109,7 +109,7 @@ ifeq ($(CONFIG_NGINX_SSL),y)
   ADDITIONAL_MODULES += --with-http_ssl_module
 endif
 ifeq ($(CONFIG_NGINX_DAV),y)
-  ADDITIONAL_MODULES += --with-http_dav_module
+  ADDITIONAL_MODULES += --with-http_dav_module --add-module=src/http/modules/nginx-dav-ext-module
 endif
 ifneq ($(CONFIG_NGINX_HTTP_CACHE),y)
   ADDITIONAL_MODULES += --without-http-cache
